@@ -82,6 +82,14 @@ npm run dev
 - API server: `http://localhost:3000`
 - Web UI (hot reload): `http://localhost:5173`
 
+## Prefer containerized development?
+
+```bash
+docker compose build
+cp .env.example .env
+docker compose up
+```
+
 ---
 
 ## Installation (Production)

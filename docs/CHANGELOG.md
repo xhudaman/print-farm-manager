@@ -2,6 +2,17 @@
 
 ---
 
+## 2026-07-07 - Server: fix client build required in dev environment
+
+`client/dist/index.html` was not found the first time the services are spun up.  This causes the server to crash and exits the process.
+
+### Changes
+- `server/index.js`: optionally skips the check for, and serving the statically built client app when the `NODE_ENV` environment variable is set to `development`
+- `.env.example`: created a new example `.env` file that can be used to pre-populate the local environment variables with sensible defaults for non-sensitive values.  This can be extended to include key/(empty)value pairs for sensitive environment variables, should the need arise
+- `README.md`: updated to include section on docker with updated step to create the `.env` file with values pre-filled from the example
+
+---
+
 ## 2026-07-06 - update.bat: discard package-lock.json drift before pulling
 
 `update.bat` runs `npm install`, which rewrites `package-lock.json` when the farm machine's npm version differs from the one that generated the lockfile. That local drift blocked `git pull` ("Your local changes ... would be overwritten by merge") the first time the lockfile changed upstream (the 2026-07-03 js-yaml bump). Hit on a real farm machine 2026-07-06.
