@@ -72,7 +72,7 @@ app.delete('/api/notifications/:id', (req, res) => {
 // Serve built React client (production mode)
 if (APP_ENV !== 'development') {
   const clientDist = path.join(__dirname, '../client/dist');
-  
+
   if (!fs.existsSync(path.join(clientDist, 'index.html'))) {
     console.error('');
     console.error('  ERROR: client/dist/index.html not found.');
@@ -87,7 +87,7 @@ if (APP_ENV !== 'development') {
   }
 
   app.use(express.static(clientDist));
-  
+
   // SPA catch-all — non-API routes serve index.html
   app.get(/^(?!\/api).*/, (_req, res) => {
     res.sendFile(path.join(clientDist, 'index.html'));
