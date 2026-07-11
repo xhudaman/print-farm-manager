@@ -13,6 +13,13 @@ const express = require('express');
 const path    = require('path');
 const fs      = require('fs');
 
+const envFilePath = path.join(process.cwd(), ".env");
+
+if (!process.env.NODE_ENV && path.existsSync(envFilePath)) {
+  process.loadEnvFile(envFilePath);
+  console.log("Loaded environment from .env");
+}
+
 const db             = require('./db');
 const PrinterPoller  = require('./poller');
 const JobScheduler   = require('./scheduler');
@@ -33,7 +40,7 @@ const printerJobsRouter  = require('./routes/printer-jobs')(db);
 
 const app  = express();
 const PORT = process.env.PORT || 3000;
-const NODE_ENV = process.env.NODE_ENV ?? 'production';
+const APP_ENV = process.env.NODE_ENV ?? 'production';
 
 app.use(express.json());
 
@@ -63,7 +70,7 @@ app.delete('/api/notifications/:id', (req, res) => {
 });
 
 // Serve built React client (production mode)
-if (NODE_ENV !== 'development') {
+if (APP_ENV !== 'development') {
   const clientDist = path.join(__dirname, '../client/dist');
   
   if (!fs.existsSync(path.join(clientDist, 'index.html'))) {
